@@ -1,6 +1,6 @@
-package com.company.ball;
-
+package com.company.bufferstrategy;
 /*** In The Name of Allah ***/
+//package game.template.bufferstrategy;
 
         import java.util.concurrent.ExecutorService;
         import java.util.concurrent.Executors;

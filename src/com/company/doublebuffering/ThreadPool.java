@@ -1,6 +1,6 @@
-package com.company.ball;
-
+package com.company.doublebuffering;
 /*** In The Name of Allah ***/
+//package game.template.doublebuffering;
 
         import java.util.concurrent.ExecutorService;
         import java.util.concurrent.Executors;

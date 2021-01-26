@@ -3,47 +3,20 @@ package com.company.ball;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.*;
-import java.util.ArrayList;
 
-
+/**
+ * Created by Movarid on 1/22/2021.
+ */
 public class LoadGameFrame {
     private JFrame f;
     private JPanel p;
     GameState gameState ;
-    private JList<File> gameList;
-    public LoadGameFrame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public LoadGameFrame(GameState gameState1) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         super();
-
-        File[] files = GameFile.getFilesInDirectory();
-        gameList = new JList<>(files);
-        gameList.setBackground(Color.GRAY);
-        Border border = BorderFactory.createLineBorder(Color.green, 2);
-        gameList.setBorder(border);
-        gameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        gameList.setVisibleRowCount(-1);
-        gameList.setMaximumSize(new Dimension(130, 100));
-        //gameList.setFixedCellWidth(130);
-        //gameList.setCellRenderer(new MyCellRenderer());
-        gameList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    int index = gameList.locationToIndex(e.getPoint());
-                    System.out.println("Item " + index + " is clicked...");
-                    GameModel content = GameFile.objectFileReader(files[index]);
-                    openExistingGame(content);
-                }
-            }
-        });
-
-
-       /* String dir = "C:\\Users\\Movarid\\Desktop\\finalProject\\games";
+        gameState = gameState1;
+        String dir = "C:\\Users\\Movarid\\Desktop\\finalProject\\games";
         f = new JFrame();
         p = new JPanel();
         f.setSize(200,200);
@@ -61,7 +34,7 @@ public class LoadGameFrame {
             for(File file : list){
                 if(file.getName().contains(name.getText())){
                     sent = true;
-                    returnedFile = file;
+                   returnedFile = file;
                 }
             }
             if(sent == false) try {
@@ -78,16 +51,8 @@ public class LoadGameFrame {
                 e2.printStackTrace();
 
             }
-        });*/
+        });
 
-    }
-
-    /**
-     * @param content of game
-     */
-    public void openExistingGame(GameModel content) {
-
-        //************************************************************************************************************
     }
     public  GameState getState(){
         return gameState;

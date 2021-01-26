@@ -1,8 +1,6 @@
-package com.company.ball;
+package com.company.bufferstrategy;
 /*** In The Name of Allah ***/
-//package game.sample.ball;
-
-import java.io.IOException;
+//package game.template.bufferstrategy;
 
 /**
  * A very simple structure for the main game loop.
@@ -29,16 +27,17 @@ public class GameLoop implements Runnable {
     private GameFrame canvas;
     private GameState state;
 
-    public GameLoop(GameFrame frame ) {
+    public GameLoop(GameFrame frame) {
         canvas = frame;
     }
 
     /**
      * This must be called before the game loop starts.
      */
-    public void init() throws IOException {
+    public void init() {
+        // Perform all initializations ...
         state = new GameState();
-//        canvas.addKeyListener(state.getKeyListener());
+        canvas.addKeyListener(state.getKeyListener());
         canvas.addMouseListener(state.getMouseListener());
         canvas.addMouseMotionListener(state.getMouseMotionListener());
     }
@@ -46,24 +45,18 @@ public class GameLoop implements Runnable {
     @Override
     public void run() {
         boolean gameOver = false;
-        boolean endOfGame = false;
-        while (!gameOver && ! endOfGame) {
+        while (!gameOver) {
             try {
                 long start = System.currentTimeMillis();
                 //
                 state.update();
                 canvas.render(state);
-                gameOver = state.gameOver;
-                 endOfGame = state.endOfGame;
                 //
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);
             } catch (InterruptedException ex) {
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
-        canvas.render(state);
     }
 }

@@ -1,8 +1,6 @@
-package com.company.ball;
+package com.company.doublebuffering;
 /*** In The Name of Allah ***/
-//package game.sample.ball;
-
-import java.io.IOException;
+//package game.template.doublebuffering;
 
 /**
  * A very simple structure for the main game loop.
@@ -12,11 +10,9 @@ import java.io.IOException;
  * long running! Both must execute very quickly, without
  * any waiting and blocking!
  *
- * Detailed discussion on different game loop design
- * patterns is available in the following link:
+ * Detailed discussion on different game-loop design-patterns
+ * is available in the following link:
  *    http://gameprogrammingpatterns.com/game-loop.html
- *
- * @author Seyed Mohammad Ghaffarian
  */
 public class GameLoop implements Runnable {
 
@@ -26,44 +22,40 @@ public class GameLoop implements Runnable {
      */
     public static final int FPS = 30;
 
-    private GameFrame canvas;
+    private GameCanvas canvas;
     private GameState state;
 
-    public GameLoop(GameFrame frame ) {
-        canvas = frame;
+    public GameLoop(GameCanvas gc) {
+        canvas = gc;
     }
 
-    /**
-     * This must be called before the game loop starts.
-     */
-    public void init() throws IOException {
+    public void init() {
+        //
+        // Perform all initializations ...
+        //
         state = new GameState();
-//        canvas.addKeyListener(state.getKeyListener());
+        canvas.addKeyListener(state.getKeyListener());
         canvas.addMouseListener(state.getMouseListener());
         canvas.addMouseMotionListener(state.getMouseMotionListener());
+        canvas.requestFocusInWindow();
     }
 
     @Override
     public void run() {
         boolean gameOver = false;
-        boolean endOfGame = false;
-        while (!gameOver && ! endOfGame) {
+        while (!gameOver) {
             try {
                 long start = System.currentTimeMillis();
                 //
                 state.update();
                 canvas.render(state);
-                gameOver = state.gameOver;
-                 endOfGame = state.endOfGame;
                 //
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);
             } catch (InterruptedException ex) {
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
-        canvas.render(state);
+
     }
 }
